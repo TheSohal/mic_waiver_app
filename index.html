@@ -162,17 +162,32 @@
                 }
             }
         });
-        //to get link reason
-        const linkInput = document.getElementById("link");
-        const reasonInput = document.getElementById("reason");
-        linkInput.addEventListener("input", () => {
-            try {
-                let url = new URL(linkInput.value);
-                reasonInput.value = url.host; 
-            } catch (e) {
-                reasonInput.value = "";
-            }
-        });
+ //to get link reason (slug only)
+const linkInput = document.getElementById("link");
+const reasonInput = document.getElementById("reason");
+
+linkInput.addEventListener("input", () => {
+    const url = linkInput.value.trim();
+    if (!url.startsWith("http")) {
+        reasonInput.value = "";
+        return;
+    }
+
+    try {
+        const parsed = new URL(url);
+
+        // take last pathname section
+        let slug = parsed.pathname.split("/").filter(Boolean).pop() || "";
+
+        // remove ID numbers like -1538246
+        slug = slug.replace(/-\d+$/, "");
+
+        reasonInput.value = slug;
+    } catch {
+        reasonInput.value = "";
+    }
+});
+
         // for name and roll no
         const members = [
               { name: "Dhruv choudhary", roll: "25435" },
@@ -273,4 +288,5 @@
     </script>
 </body>
 </html>
+
 
