@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>waiver system</title>
+    <link rel="icon" type="image/png" href="mic.png">
+    <style>
+        body{    
+            background: linear-gradient(135deg, #0a0a0a, #1b1b1b);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .box1{
+            background: #111;
+            border: 1px solid #f07575;
+            border-radius: 15px;
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 750px; 
+        }
+        h2{
+            color: #ff6161;
+            font-size: 1.6em;
+        }
+        .formpart{
+            margin-bottom: 18px;
+        }
+        input, select{
+            width: 90%;
+            padding: 12px;
+            background: #222;
+            border: 1px solid #f07575;
+            border-radius: 8px;
+            color: #fff;
+            outline: none;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            border-color: #ff3c3c;
+            box-shadow: 0 0 10px #ff1e1e;
+        }
+        #submit{
+            width: 100%;
+            padding: 12px;
+            background: #ff1e1e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        #submit:hover{
+            background: #ff3c3c;
+            transform: scale(1.03);
+        }
+        .note{
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        /* Responsive adjustments for phones */
+        @media (max-width: 480px) {
+            body{
+                height: auto;
+                padding: 30px 10px;
+            }
+            .box1{
+                width: 100%;
+                padding: 25px 15px;
+            }
+            input, select, #button {
+                font-size: 1em;
+                padding: 10px;
+            }
+            h2{
+                font-size: 1.4em;
+            }
+        }
+        #flex{
+            display: flex;
+            gap: 25px;
+        }
+        img{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <div id="flex">
+            <img src="mic.png" alt="logo">
+            <h2>MIC WAVIER FORM</h1>
+        </div>
+        <form id="waiverFormdata" method="post">
+            <div class="formpart">
+                <label for="name" class="name">Name:</label>
+                <select id="name" name="name" required>
+                    <option value="" disabled selected>-- Select Name --</option>
+                </select>
+            </div>
+            <br><br>
+            <div class="formpart">
+                <label for="roll">Roll No :</label>
+                <input type="text" id="rollInput" placeholder="Roll No will appear here" disabled input>
+            </div>
+            <br><br>
+            <div class="formpart">
+                <label for="link">Reason Link:</label>
+                <input type="url" id="link" name="link" placeholder="https://example.com" required>
+            </div>
+            <br><br>
+            <div class="formpart">
+                <label for="reason">Reason:</label>
+                <input type="text" id="reason" name="reason" required disabled input>
+            </div>
+            <br><br>
+            <div class="formpart">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <br><br>
+            <input id="submit" type="submit" value="Submit">
+            <p class="note">For any query ,Contact Cordinators</p>
+            <p class="note">Sahil Kumar : 9229952591 , Hanshul Yadav : 9318490153</p>
+            <p class="note"></p>
+        </form>
+    </div>
+    <script>
+        //block previous date
+        document.getElementById("date").addEventListener("change", function() {
+            let selectedDate = new Date(this.value);
+            let now = new Date();
+            let today = new Date();
+            let tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            if (selectedDate <= today) {
+                alert("You cannot select this date.");
+                this.value = "";
+                return;
+            }
+            //block date after 9
+            if (
+                selectedDate.getFullYear() === tomorrow.getFullYear() &&
+                selectedDate.getMonth() === tomorrow.getMonth() &&
+                selectedDate.getDate() === tomorrow.getDate()
+            ) {
+                if (now.getHours() >= 21) {
+                    alert("You cannot select tomorrow's date after 9:00 PM.");
+                    this.value = "";
+                }
+            }
+        });
+        //to get link reason
+        const linkInput = document.getElementById("link");
+        const reasonInput = document.getElementById("reason");
+        linkInput.addEventListener("input", () => {
+            try {
+                let url = new URL(linkInput.value);
+                reasonInput.value = url.host; 
+            } catch (e) {
+                reasonInput.value = "";
+            }
+        });
+        // for name and roll no
+        const members = [
+              { name: "Dhruv choudhary", roll: "25435" },
+              { name: "Bhavy Muwal", roll: "25061" },
+              { name: "Jarbera D.K Tamang", roll: "25105" },
+              { name: "Kashish Raj", roll: "25456" },
+              { name: "Kannan Chachra", roll: "25111" },
+              { name: "Anya Singh", roll: "25415" },
+              { name: "Anushruti", roll: "25034" },
+              { name: "Garima Chaudhary", roll: "25086" },
+              { name: "Arnim Suriya", roll: "25042" },
+              { name: "Avani Gupta", roll: "25285" },
+              { name: "Tanishq Amrute", roll: "25752" },
+              { name: "Achyutam Koul", roll: "25011" },
+              { name: "Mahi Gupta", roll: "25134" },
+              { name: "Jiya", roll: "25107" },
+              { name: "Sarthak Jain", roll: "25203" },
+              { name: "Antra Sinha", roll: "25414" },
+              { name: "Kashika Jain", roll: "25114" },
+              { name: "Nilay Poptani", roll: "25478" },
+              { name: "Hardik Baweja", roll: "25276" },
+              { name: "Ashmeet kaur", roll: "25051" },
+              { name: "Khushi Jain", roll: "25731" },
+              { name: "Aryan dhamija", roll: "25421" },
+              { name: "Niket Aggarwal", roll: "25739" },
+              { name: "Shivam Patel", roll: "25505" },
+              { name: "Aditya Sohal", roll: "25704" },
+              { name: "Srisham Dash", roll: "25224" },
+              { name: "Gajanan Ingewad", roll: "25102" },
+              { name: "Kashak kumari", roll: "25729" },
+              { name: "Mohit Raheja", roll: "25474" },
+              { name: "Shivay jain", roll: "25507" },
+              { name: "Abhiram Vipin", roll: "25293" },
+              { name: "Pratham Gupta", roll: "25488" }
+        ];
+        const dropdown = document.querySelector(".box1 select");
+        const rollInput = document.querySelector("#rollInput");
+        for (let member of members) {
+            let option = document.createElement("option");
+            option.value = member.roll;    
+            option.textContent = member.name;
+            dropdown.append(option);
+        }
+        dropdown.addEventListener("change", function() {
+            const selectedRoll = dropdown.value;
+            rollInput.value = selectedRoll;
+        });
+        // storing data
+        const form = document.getElementById('waiverFormdata');
+        form.addEventListener('submit', e => {
+            e.preventDefault();  
+            const data = {
+                name: document.getElementById('name').options[document.getElementById('name').selectedIndex].text,
+                rollno: document.getElementById('rollInput').value,
+                link: document.getElementById('link').value,
+                reason: document.getElementById('reason').value,
+                date: document.getElementById('date').value,
+            };
+            fetch('https://script.google.com/macros/s/AKfycbxUqZ2apc06kxLDIBz_MUhh2ymI-Pnv56uivAmeoqy9zZkfb1MPW2TRSlYyfPI3y78XmA/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                alert('Form submitted successfully!');
+                form.reset();
+            })
+            .catch(err => alert('Error: ' + err));  
+        });
+    </script>
+</body>
+</html>
